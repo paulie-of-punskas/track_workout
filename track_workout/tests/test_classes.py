@@ -14,6 +14,12 @@ class TestTotalWorkout(unittest.TestCase):
         test_string = "TotalWorkout object created @ " + str(now)
         self.assertEqual(workout.__str__(), test_string)
 
+    def test_custom_date(self):
+        date_string = "1990-03-11"
+        workout = TotalWorkout(date_string)
+        test_string = "TotalWorkout object created @ " + date_string
+        self.assertEqual(workout.__str__(), test_string)     
+
 class TestExercise(unittest.TestCase):
     pratimai = exercises.exercises
 

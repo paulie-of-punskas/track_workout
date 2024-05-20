@@ -2,11 +2,21 @@ from datetime import datetime
 from track_workout.static import exercises
 
 class TotalWorkout:
-    def __init__(self):
-        self.date = datetime.now().strftime("%Y-%m-%-d")
+    """
+    TotalWorkout class contains all exercises ("Exercise" class instances), that were done
+    in during workout session. If no workout date is provided, then it assigns current date
+    as its value.
+    """
+    # === "overloaded" constructor, for custom workout entries
+    def __init__(self, date=None):
+        if date is None:
+            self.date = datetime.now().strftime("%Y-%m-%-d")
+        else:
+            self.date = date
 
     def __str__(self):
         return f"TotalWorkout object created @ {self.date}"
+    
 
 class Exercise:
     def __init__(self, muscle, exercise, kg, rep, comment):
