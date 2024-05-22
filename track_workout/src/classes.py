@@ -54,5 +54,5 @@ class Exercise:
         user_muscle_exercises = list(pratimai[user_muscle])
         if not value in user_muscle_exercises:
             raise TypeError("'exercise' value needs to be one of the following " + str(user_muscle_exercises))
-        print(">> exercises for " + user_muscle + ": " + str(user_muscle_exercises))
+        # print(">> exercises for " + user_muscle + ": " + str(user_muscle_exercises))
         self._exercise = value
