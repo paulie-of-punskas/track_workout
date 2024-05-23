@@ -8,11 +8,12 @@ class TotalWorkout:
     as its value.
     """
     # === "overloaded" constructor, for custom workout entries
-    def __init__(self, date=None):
+    def __init__(self, date=None, workout_list=[]):
         if date is None:
             self.date = datetime.now().strftime("%Y-%m-%-d")
         else:
             self.date = date
+        self.workout_list = workout_list
 
     def __str__(self):
         return f"TotalWorkout object created @ {self.date}"
@@ -41,7 +42,7 @@ class Exercise:
 
     @property
     def exercise(self):
-        print(">> Getter used for 'muscle' property")
+        print(">> Getter used for 'exercise' property")
         return self._exercise
     
     @exercise.setter

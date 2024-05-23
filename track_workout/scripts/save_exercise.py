@@ -21,6 +21,4 @@ geguze22 = [Exercise("nugara", "prisitraukimai", "", 4, ""),
             Exercise("bicepsas", "curls - palms up", 3, 8, ""),
 ]
 
-for j in range(int(len(geguze22))):
-    print(geguze22[j].exercise)
-
+total_workout = TotalWorkout("2024-05-22", geguze22)

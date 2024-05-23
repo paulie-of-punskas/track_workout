@@ -31,6 +31,15 @@ class TestExercise(unittest.TestCase):
         exer = Exercise("krutine", "spaudimas", "", "", "")
         self.assertIsInstance(exer, Exercise)
         
-    
-    print("krutine" in pratimai.keys())
-    print("'muscle' value needs to be one of the following: " + str(list(pratimai.keys())))
+    def test_exercise_and_totalworkout(self):
+        geguze22 = [Exercise("nugara", "prisitraukimai", "", 4, ""),
+                    Exercise("bicepsas", "curls - palms up", 3, 8, "")]
+        
+        total_workout = TotalWorkout("2024-05-22", geguze22)
+
+        self.assertTrue(total_workout.date, "2024-05-22")
+        self.assertEqual(total_workout.workout_list[0].muscle, "nugara")
+        self.assertEqual(total_workout.workout_list[1].muscle, "bicepsas")
+
+        with self.assertRaises(IndexError):
+            total_workout.workout_list[2]
