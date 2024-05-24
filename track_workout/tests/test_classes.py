@@ -38,8 +38,8 @@ class TestExercise(unittest.TestCase):
         total_workout = TotalWorkout("2024-05-22", geguze22)
 
         self.assertTrue(total_workout.date, "2024-05-22")
-        self.assertEqual(total_workout.workout_list[0].muscle, "nugara")
-        self.assertEqual(total_workout.workout_list[1].muscle, "bicepsas")
+        self.assertEqual(total_workout.exercises_list[0].muscle, "nugara")
+        self.assertEqual(total_workout.exercises_list[1].muscle, "bicepsas")
 
         with self.assertRaises(IndexError):
-            total_workout.workout_list[2]
+            total_workout.exercises_list[2]

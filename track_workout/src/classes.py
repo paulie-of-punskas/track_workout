@@ -6,20 +6,30 @@ class TotalWorkout:
     TotalWorkout class contains all exercises ("Exercise" class instances), that were done
     in during workout session. If no workout date is provided, then it assigns current date
     as its value.
+    date - date of workout
+    exercises_list - list containing objects of Exercise class
     """
     # === "overloaded" constructor, for custom workout entries
-    def __init__(self, date=None, workout_list=[]):
+    def __init__(self, date=None, exercises_list=[]):
         if date is None:
             self.date = datetime.now().strftime("%Y-%m-%-d")
         else:
             self.date = date
-        self.workout_list = workout_list
+        self.exercises_list = exercises_list
+
+    def to_list(self):
+        exercises_list_str = []
+        for exercise in self.exercises_list:
+            exercises_list_str.append(exercise.to_list())
+        return exercises_list_str
 
     def __str__(self):
         return f"TotalWorkout object created @ {self.date}"
     
 
 class Exercise:
+    """
+    """
     def __init__(self, muscle, exercise, kg, rep, comment):
         self.muscle = muscle
         self.exercise = exercise
@@ -47,13 +57,19 @@ class Exercise:
     
     @exercise.setter
     def exercise(self, value):
-        print(">> Setter used for 'exercise' property")
-        pratimai = exercises.exercises
         # === get exercises for given muscle group
         user_muscle = self._muscle
-        print(">> muscle: " + user_muscle)
+        print(">> Setter used for 'exercise' property, muscle = " + user_muscle)
+        pratimai = exercises.exercises
         user_muscle_exercises = list(pratimai[user_muscle])
         if not value in user_muscle_exercises:
             raise TypeError("'exercise' value needs to be one of the following " + str(user_muscle_exercises))
         # print(">> exercises for " + user_muscle + ": " + str(user_muscle_exercises))
         self._exercise = value
+    
+    def to_list(self):
+        return [str(self.muscle), str(self.exercise), str(self.kg), str(self.rep), str(self.comment)]
+
+    # def __str__(self):
+    #     xx = self.muscle + "," + self.exercise + "," + str(self.kg) + "," + str(self.rep) + "," + self.comment
+    #     return xx
