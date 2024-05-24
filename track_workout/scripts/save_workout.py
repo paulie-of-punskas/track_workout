@@ -31,6 +31,8 @@ total_workout = TotalWorkout("2024-05-22", geguze22)
 print("")
 print(total_workout.to_list())
 
+print(type(total_workout.to_list()))
+
 # print("len = ", len(geguze22))
 # total_workout_str = []
 

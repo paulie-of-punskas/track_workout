@@ -20,6 +20,14 @@ class TestTotalWorkout(unittest.TestCase):
         test_string = "TotalWorkout object created @ " + date_string
         self.assertEqual(workout.__str__(), test_string)     
 
+    def test_to_list(self):
+        geguze22 = [Exercise("nugara", "prisitraukimai", "", 4, ""),
+                    Exercise("bicepsas", "curls - palms up", 3, 8, "")]
+        
+        total_workout = TotalWorkout("2024-05-22", geguze22)
+        total_workout_list = total_workout.to_list()
+        self.assertTrue(isinstance(total_workout_list, list))
+
 class TestExercise(unittest.TestCase):
     pratimai = exercises.exercises
 
@@ -43,3 +51,8 @@ class TestExercise(unittest.TestCase):
 
         with self.assertRaises(IndexError):
             total_workout.exercises_list[2]
+
+    def test_to_list(self):
+        exercise = Exercise("nugara", "prisitraukimai", "", 4, "")
+        exercise_as_list = exercise.to_list()
+        self.assertTrue(isinstance(exercise_as_list, list))
