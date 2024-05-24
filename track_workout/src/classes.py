@@ -20,7 +20,10 @@ class TotalWorkout:
     def to_list(self):
         exercises_list_str = []
         for exercise in self.exercises_list:
-            exercises_list_str.append(exercise.to_list())
+            exercise_with_date = exercise.to_list()
+            # exercise_with_date.append(self.date)
+            exercise_with_date.insert(0, self.date)
+            exercises_list_str.append(exercise_with_date)
         return exercises_list_str
 
     def __str__(self):
