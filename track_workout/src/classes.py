@@ -21,7 +21,6 @@ class TotalWorkout:
         exercises_list_str = []
         for exercise in self.exercises_list:
             exercise_with_date = exercise.to_list()
-            # exercise_with_date.append(self.date)
             exercise_with_date.insert(0, self.date)
             exercises_list_str.append(exercise_with_date)
         return exercises_list_str
@@ -32,6 +31,7 @@ class TotalWorkout:
 
 class Exercise:
     """
+    Class used for creating each exercise. Dictionary of exercises can be found in `./static/exercises.py`
     """
     def __init__(self, muscle, exercise, kg, rep, comment):
         self.muscle = muscle
@@ -73,6 +73,3 @@ class Exercise:
     def to_list(self):
         return [str(self.muscle), str(self.exercise), str(self.kg), str(self.rep), str(self.comment)]
 
-    # def __str__(self):
-    #     xx = self.muscle + "," + self.exercise + "," + str(self.kg) + "," + str(self.rep) + "," + self.comment
-    #     return xx
