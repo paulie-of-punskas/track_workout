@@ -1,8 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from track_workout import app
 from track_workout.static.exercises import exercises
-
 import csv
+
 
 @app.route('/')
 def index():
@@ -23,4 +23,10 @@ def submit_workouts():
     muscle_groups.append("-- Select")
     return render_template("submit_workouts.html", muscle_groups=muscle_groups)
     # === get values for exercises dictionary
-    
+
+@app.route('/get_exercises/<muscle>')
+def get_exercises(muscle):
+    if muscle not in exercises:
+        return jsonify([])
+    else:
+        return jsonify(exercises[muscle])

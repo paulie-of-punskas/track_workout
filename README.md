@@ -21,3 +21,7 @@ as per: https://flask.palletsprojects.com/en/2.0.x/patterns/packages/
 - extra data:
     - `static/exercises.py` - file contains all exercises
     - ~~WeightsReps (not sure if really needed)~~
+
+### Stack:
+- backend: Python and Flask
+- frontend: HTML, JS, AJAX (https://stackoverflow.com/a/44654011)
