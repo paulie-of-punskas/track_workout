@@ -1,0 +1,16 @@
+<html>
+    <title>Submit workouts</title>
+
+    <h1>Submit workouts, depending on muscle group</h1>
+    <!-- Dropdown, containing valus from ./static/exercises.py -->
+    <form name="add_workouts" id="add_workouts">
+        <b>Raumenys:&emsp;</b>
+        <select name="raumenys" id="raumenys">
+            {% for muscle in muscle_groups %}
+                <option selected="selected">{{ muscle }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+
+</html>

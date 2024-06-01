@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from track_workout import app
+from track_workout.static.exercises import exercises
 
 import csv
 
@@ -13,3 +14,13 @@ def view_workouts():
         workouts_file = csv.reader(csv_file, delimiter=",", quotechar="|")
         header = next(workouts_file)
         return render_template("view_workouts.html", header=header, rows=workouts_file)
+
+@app.route('/submit_workouts')
+def submit_workouts():
+    # === get keys for exercises dictionary
+    muscle_groups = list(exercises)
+    # === workaround to add empty cell, so that dropdown list has 
+    muscle_groups.append("-- Select")
+    return render_template("submit_workouts.html", muscle_groups=muscle_groups)
+    # === get values for exercises dictionary
+    
