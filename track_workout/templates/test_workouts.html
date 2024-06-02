@@ -1,0 +1,66 @@
+<html>
+<title>Submit workouts</title>
+
+<h1>Submit workouts, depending on muscle group</h1>
+<!-- Dropdown, containing valus from ./static/exercises.py -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" 
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+</script>
+
+<body>
+    <div>
+
+            <div>
+                <b>Raumenys:&emsp;</b>
+                <select name="raumenys" id="raumenys">
+                    <option selected value="0">Pasirink raumenis</option>
+                    {% for muscle in muscle_groups %}
+                    <option value="{{ muscle }}">{{ muscle }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div>
+                <b>Pratimas:&emsp;</b>
+                <select name="pratimas" id="pratimas">
+                    <option selected value="0">Pasirink pratima</option>
+                    {% for exercise in exercises %}
+                    <option value="{{ exercise }}">{{ exercise }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <br>
+            <br>
+            <!-- <input type="submit"> -->
+
+
+    </div>
+</body>
+<script>
+    document.getElementById('raumenys').onchange = function () {
+        var selected_muscle = this.value;
+        console.log(">> " + selected_muscle);
+
+        // Jinja explanation: https://stackoverflow.com/a/36144071
+        // solution explanation: https://stackoverflow.com/a/75970022
+        var url = "{{ url_for('get_exercises', muscle='') }}" + selected_muscle;
+        console.log(url);
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function (data) {
+                $("#pratimas").empty();
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    $("#pratimas").append('<option value="' + data[i] + '"/>');
+                }
+            }
+        });
+    }
+</script>
+
+
+</html>

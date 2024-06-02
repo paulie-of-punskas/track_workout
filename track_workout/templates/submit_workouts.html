@@ -3,15 +3,59 @@
 
     <h1>Submit workouts, depending on muscle group</h1>
     <!-- Dropdown, containing valus from ./static/exercises.py -->
-    <form name="add_workouts" id="add_workouts">
-        <b>Raumenys:&emsp;</b>
-        <select name="raumenys" id="raumenys">
-            {% for muscle in muscle_groups %}
-                <option selected="selected">{{ muscle }}</option>
-            {% endfor %}
-        </select>
-    </form>
 
-    <!-- Generate further dropdown list, depending on value chosen within "add_workouts" -->
+    <head>
+        <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function() {
     
+            $('#all_classes').change(function(){
+    
+              $.getJSON('/_update_dropdown', {
+                selected_class: $('#all_classes').val()
+    
+              }).done(function(data) {
+                    $('#all_entries').html(data.html_string_selected);
+               })
+            });
+            $('#process_input').bind('click', function() {
+    
+                $.getJSON('/_process_data', {
+                    selected_class: $('#all_classes').val(),
+                    selected_entry: $('#all_entries').val(),
+    
+    
+                }).success(function(data) {
+                    $('#processed_results').text(data.random_text);
+                })
+              return false;
+    
+            });
+          });
+        </script>
+    </head>
+    <div>
+        <b>Raumenys:&emsp;</b>
+        <select name="raumenys" id="raumenys" onfocus="this.selectedIndex = -1;">
+            <option selected value="0">Pasirink raumenis</option>
+            {% for muscle in muscle_groups %}
+                <option value>{{ muscle }}</option>
+          {% endfor %}
+        </select>
+    </div>
+    <br>
+    <br>
+    <div>
+    <b>Pratimas:&emsp;</b>
+    <select name="pratimas" id="pratimas">
+        <option selected value="0">Pasirink pratima</option>
+        {% for exercise in exercises %}
+            <option value>{{ exercise }}</option>
+        {% endfor %}
+    </select>
+    </div>
+    <br>
+    <br>
+    <input type="submit">
 </html>
