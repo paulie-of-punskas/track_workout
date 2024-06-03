@@ -2,7 +2,7 @@
 <title>Submit workouts</title>
 
 <h1>Submit workouts, depending on muscle group</h1>
-<!-- Dropdown, containing valus from ./static/exercises.py -->
+<!-- Dropdown, containing values from ./static/exercises.py -->
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" 
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -33,11 +33,13 @@
             </div>
             <br>
             <br>
-            <!-- <input type="submit"> -->
-
-
     </div>
 </body>
+
+<!-- 
+    script used for populating exercise field, depending on value of muscle_group
+    placed at the bottom, due to TypeError: null is not an object error
+-->
 <script>
     document.getElementById('raumenys').onchange = function () {
         var selected_muscle = this.value;
@@ -55,12 +57,12 @@
                 $("#pratimas").empty();
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    $("#pratimas").append('<option value="' + data[i] + '"/>');
+                    console.log(">> content of data: " + data[i]);
+                    $("#pratimas").append('<option value="' + data[i] + '">' + data[i] + '</option>');
                 }
             }
         });
     }
 </script>
-
 
 </html>
