@@ -36,9 +36,12 @@ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="ano
     <label for="pakartojimai"><b>Pakartojimai:</b></label>
     <input type="text" id="pakartojimai" name="pakartojimai" value=""><br>
     <br>
+    <label for="komentaras"><b>Komentaras:</b></label>
+    <input type="text" id="komentaras" name="komentaras" value=""><br>
+    <br>
     <br>
     <option></option>
-    <input id="button" type="submit" onclick="getEnteredData()" value="Send Request" />
+    <!-- <input id="button" type="submit" onclick="getEnteredData()" value="Send Request" /> -->
     <input id="guzikas" type="submit" value="Guzikas" />
   </div>
 </body>
@@ -71,16 +74,33 @@ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="ano
     });
   }
 
-  function getEnteredData() {
+  // function getEnteredData() {
+  //   var element_raumenys = document.getElementById('raumenys').value;
+  //   var element_pratimas = document.getElementById('pratimas').value;
+  //   var element_svoris = document.getElementById('svoris').value;
+  //   var element_pakartojimai = document.getElementById('pakartojimai').value;
+  //   console.log(">> Entered data: " + element_raumenys + " " + element_pratimas + " " + element_svoris + " " + element_pakartojimai);
+  // };
+
+  document.getElementById('guzikas').onclick = function() {
+    console.log("It's me Kathie, I have come home. So cold.")
     var element_raumenys = document.getElementById('raumenys').value;
     var element_pratimas = document.getElementById('pratimas').value;
     var element_svoris = document.getElementById('svoris').value;
     var element_pakartojimai = document.getElementById('pakartojimai').value;
-    console.log(">> Entered data: " + element_raumenys + " " + element_pratimas + " " + element_svoris + " " + element_pakartojimai);
-  };
+    var element_komentaras = document.getElementById('komentaras').value;
+ 
+    // create json with entered data
+    var jsonAsString = JSON.stringify({
+      muscle: element_raumenys, 
+      exercise: element_pratimas, 
+      kg: element_svoris, 
+      rep: element_pakartojimai, 
+      comment: element_komentaras
+    });
 
-  document.getElementById('guzikas').onclick = function() {
-    console.log("It's me Kathie, I have come home. So cold.")
+    console.log(jsonAsString);
+    
   };
   
 </script>
