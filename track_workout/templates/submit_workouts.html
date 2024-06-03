@@ -8,7 +8,6 @@
 integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
 </script>
 
-
 <body>
   <div>
     <div>
@@ -20,7 +19,7 @@ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="ano
         {% endfor %}
       </select>
     </div>
-
+    <br>
     <div>
       <b>Pratimas:&emsp;</b>
       <select name="pratimas" id="pratimas">
@@ -31,7 +30,16 @@ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="ano
       </select>
     </div>
     <br>
+    <label for="svoris"><b>Svoris:</b></label>
+    <input type="text" id="svoris" name="svoris" value=""><br>
     <br>
+    <label for="pakartojimai"><b>Pakartojimai:</b></label>
+    <input type="text" id="pakartojimai" name="pakartojimai" value=""><br>
+    <br>
+    <br>
+    <option></option>
+    <input id="button" type="submit" onclick="getEnteredData()" value="Send Request" />
+    <input id="guzikas" type="submit" value="Guzikas" />
   </div>
 </body>
 
@@ -45,7 +53,7 @@ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="ano
     console.log(">> " + selected_muscle);
 
     // Jinja explanation: https://stackoverflow.com/a/36144071
-    // solution explanation: https://stackoverflow.com/a/75970022
+    // Solution explanation: https://stackoverflow.com/a/75970022
     var url = "{{ url_for('get_exercises', muscle='') }}" + selected_muscle;
     console.log(url);
 
@@ -62,6 +70,19 @@ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="ano
       }
     });
   }
+
+  function getEnteredData() {
+    var element_raumenys = document.getElementById('raumenys').value;
+    var element_pratimas = document.getElementById('pratimas').value;
+    var element_svoris = document.getElementById('svoris').value;
+    var element_pakartojimai = document.getElementById('pakartojimai').value;
+    console.log(">> Entered data: " + element_raumenys + " " + element_pratimas + " " + element_svoris + " " + element_pakartojimai);
+  };
+
+  document.getElementById('guzikas').onclick = function() {
+    console.log("It's me Kathie, I have come home. So cold.")
+  };
+  
 </script>
 
 </html>
