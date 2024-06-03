@@ -5,8 +5,8 @@
 <!-- Dropdown, containing values from ./static/exercises.py -->
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
-</script>
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+  </script>
 
 <body>
   <div>
@@ -82,27 +82,41 @@ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="ano
   //   console.log(">> Entered data: " + element_raumenys + " " + element_pratimas + " " + element_svoris + " " + element_pakartojimai);
   // };
 
-  document.getElementById('guzikas').onclick = function() {
+  document.getElementById('guzikas').onclick = function () {
     console.log("It's me Kathie, I have come home. So cold.")
     var element_raumenys = document.getElementById('raumenys').value;
     var element_pratimas = document.getElementById('pratimas').value;
     var element_svoris = document.getElementById('svoris').value;
     var element_pakartojimai = document.getElementById('pakartojimai').value;
     var element_komentaras = document.getElementById('komentaras').value;
- 
+
     // create json with entered data
-    var jsonAsString = JSON.stringify({
-      muscle: element_raumenys, 
-      exercise: element_pratimas, 
-      kg: element_svoris, 
-      rep: element_pakartojimai, 
-      comment: element_komentaras
+    var entered_data = [
+      { "muscle": element_raumenys },
+      { "exercise": element_pratimas },
+      { "kg": element_svoris },
+      { "rep": element_pakartojimai },
+      { "comment": element_komentaras }
+    ];
+
+    // send json object with API to ingest_js
+    var url = "{{ url_for('ingest_js') }}";
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: JSON.stringify(entered_data),
+      contentType: "application/json",
+      dataType: 'json',
+      success: function () {
+        console.log(">> data as json was sent succesfully")
+      },
+      error: function () {
+        console.log(">> error while sending")
+      }
     });
 
-    console.log(jsonAsString);
-    
   };
-  
+
 </script>
 
 </html>
