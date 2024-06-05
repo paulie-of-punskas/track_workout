@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 from track_workout import app
 from track_workout.static.exercises import exercises
+from track_workout.src.classes import Exercise, TotalWorkout
 import csv
 import json
 
@@ -25,11 +26,15 @@ def submit_workouts():
 
 @app.route('/ingest_js', methods=['POST'])
 def ingest_js():
-    # === get data from submit_workouts and create instance object
-    print(">> parsing data")
-    content = request.get_json()
-    print(">> parsed data: " + str(content))
-    return jsonify(content)
+    # === get JSON data from submit_workouts and create instance object
+    frontend_data_json = request.get_json()
+    print(frontend_data_json)
+    exercise = Exercise(muscle = frontend_data_json[0].get('muscle'), 
+                        exercise = frontend_data_json[1].get('exercise'), 
+                        kg = frontend_data_json[2].get('kg'), 
+                        rep = frontend_data_json[3].get('rep'), 
+                        comment = frontend_data_json[4].get('comment'))
+    return str("Data was received and saved.")
 
 @app.route('/get_exercises/<muscle>')
 def get_exercises(muscle):

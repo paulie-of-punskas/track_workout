@@ -90,12 +90,15 @@
     var element_pakartojimai = document.getElementById('pakartojimai').value;
     var element_komentaras = document.getElementById('komentaras').value;
 
-    // create json with entered data
+    /*
+    create json with entered data. Numerical values need to be parsed with `parseInt()`, so tha
+    JSON file is properaly formatted.
+    */
     var entered_data = [
       { "muscle": element_raumenys },
       { "exercise": element_pratimas },
-      { "kg": element_svoris },
-      { "rep": element_pakartojimai },
+      { "kg": parseInt(element_svoris) },
+      { "rep": parseInt(element_pakartojimai) },
       { "comment": element_komentaras }
     ];
 
@@ -106,13 +109,7 @@
       url: url,
       data: JSON.stringify(entered_data),
       contentType: "application/json",
-      dataType: 'json',
-      success: function () {
-        console.log(">> data as json was sent succesfully")
-      },
-      error: function () {
-        console.log(">> error while sending")
-      }
+      dataType: 'json'
     });
 
   };
