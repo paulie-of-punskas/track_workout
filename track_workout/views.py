@@ -34,7 +34,7 @@ def ingest_js():
                         kg = frontend_data_json[2].get('kg'), 
                         rep = frontend_data_json[3].get('rep'), 
                         comment = frontend_data_json[4].get('comment'))
-    return str("Data was received and saved.")
+    return jsonify(str("Data was received and saved."))
 
 @app.route('/get_exercises/<muscle>')
 def get_exercises(muscle):
