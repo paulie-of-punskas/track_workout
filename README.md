@@ -1,8 +1,8 @@
 App is used for tracking my workouts.
 
 ### How to run without Flask:
-- start venv (`source venv/bin/activate`)
-- in main directory, install (`pip install -e .`)
+- start venv `source venv/bin/activate`
+- in main directory, install `pip install -e .`
 - edit and run `./scripts/save_workout.py`
 
 ### Running Flask app:
