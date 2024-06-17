@@ -39,6 +39,7 @@ class Exercise:
         self.kg = kg
         self.rep = rep
         self.comment = comment
+        self.date = datetime.now().strftime("%Y-%m-%d")
 
     @property
     def muscle(self):
@@ -71,5 +72,4 @@ class Exercise:
         self._exercise = value
     
     def to_list(self):
-        return [str(self.muscle), str(self.exercise), str(self.kg), str(self.rep), str(self.comment)]
-
+        return [str(self.date), str(self.muscle), str(self.exercise), str(self.kg), str(self.rep), str(self.comment)]
