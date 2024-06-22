@@ -1,8 +1,8 @@
 App is used for tracking my workouts.
 
 ### How to run without Flask:
-- start venv (`source venv/bin/activate`)
-- in main directory, install (`pip install -e .`)
+- start venv `source venv/bin/activate`
+- in main directory, install `pip install -e .`
 - edit and run `./scripts/save_workout.py`
 
 ### Running Flask app:
@@ -16,8 +16,8 @@ as per: https://flask.palletsprojects.com/en/2.0.x/patterns/packages/
 
 ### App pseudo diagram
 - classes:
-    - TotalWorkout (contains all exercises done on a particular day
-    - Exercise (contains muscle groups, exercises, weights and repetitions done))
+    - ~~TotalWorkout (contains all exercises done on a particular day)~~
+    - Exercise (contains muscle groups, exercises, weights and repetitions done)
 - extra data:
     - `static/exercises.py` - file contains all exercises
     - ~~WeightsReps (not sure if really needed)~~

@@ -39,6 +39,7 @@ class Exercise:
         self.kg = kg
         self.rep = rep
         self.comment = comment
+        self.date = datetime.now().strftime("%Y-%m-%d")
 
     @property
     def muscle(self):
@@ -66,10 +67,9 @@ class Exercise:
         pratimai = exercises.exercises
         user_muscle_exercises = list(pratimai[user_muscle])
         if not value in user_muscle_exercises:
-            raise TypeError("'exercise' value needs to be one of the following " + str(user_muscle_exercises))
+            raise TypeError("'exercise' value needs to be one of the following " + str(user_muscle_exercises) + ". You entered: " + str(value))
         # print(">> exercises for " + user_muscle + ": " + str(user_muscle_exercises))
         self._exercise = value
     
     def to_list(self):
-        return [str(self.muscle), str(self.exercise), str(self.kg), str(self.rep), str(self.comment)]
-
+        return [str(self.date), str(self.muscle), str(self.exercise), str(self.kg), str(self.rep), str(self.comment)]
