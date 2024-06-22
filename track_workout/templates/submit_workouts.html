@@ -39,6 +39,9 @@
     <label for="komentaras"><b>Komentaras:</b></label>
     <input type="text" id="komentaras" name="komentaras" value=""><br>
     <br>
+    <label for="workout_date"><b>Sporto data:</b></label>
+    <input type="text" id="workout_date" name="workout_date" value=""><br>
+    <br>
     <br>
     <option></option>
     <!-- <input id="button" type="submit" onclick="getEnteredData()" value="Send Request" /> -->
@@ -89,6 +92,7 @@
     var element_svoris = document.getElementById('svoris').value;
     var element_pakartojimai = document.getElementById('pakartojimai').value;
     var element_komentaras = document.getElementById('komentaras').value;
+    var element_workout_date = document.getElementById('workout_date').value;
 
     /*
     create json with entered data. Numerical values need to be parsed with `parseInt()`, so tha
@@ -99,7 +103,8 @@
       { "exercise": element_pratimas },
       { "kg": parseInt(element_svoris) },
       { "rep": parseInt(element_pakartojimai) },
-      { "comment": element_komentaras }
+      { "comment": element_komentaras },
+      { "workout_date": element_workout_date}
     ];
 
     // send json object with API to ingest_js

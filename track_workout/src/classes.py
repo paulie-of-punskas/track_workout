@@ -33,13 +33,26 @@ class Exercise:
     """
     Class used for creating each exercise. Dictionary of exercises can be found in `./static/exercises.py`
     """
-    def __init__(self, muscle, exercise, kg, rep, comment):
+    def __init__(self, muscle, exercise, kg, rep, comment, workout_date):
         self.muscle = muscle
         self.exercise = exercise
         self.kg = kg
         self.rep = rep
         self.comment = comment
-        self.date = datetime.now().strftime("%Y-%m-%d")
+        self.workout_date = workout_date
+        # self.date = datetime.now().strftime("%Y-%m-%d")
+
+    @property
+    def workout_date(self):
+        return self._workout_date
+    
+    @workout_date.setter
+    def workout_date(self, value):
+        print(">> Setter used for 'workout_date' property")
+        if value == "":
+            self._workout_date = datetime.now().strftime("%Y-%m-%d")
+        else:
+            self._workout_date = value
 
     @property
     def muscle(self):
@@ -72,4 +85,4 @@ class Exercise:
         self._exercise = value
     
     def to_list(self):
-        return [str(self.date), str(self.muscle), str(self.exercise), str(self.kg), str(self.rep), str(self.comment)]
+        return [str(self.workout_date), str(self.muscle), str(self.exercise), str(self.kg), str(self.rep), str(self.comment)]
