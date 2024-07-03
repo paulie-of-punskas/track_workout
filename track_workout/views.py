@@ -1,11 +1,15 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, send_file, redirect, url_for
 from track_workout import app
 from track_workout.static.exercises import exercises
 from track_workout.src.classes import Exercise, TotalWorkout
 from track_workout.scripts.save_workout import save_workout
+import os
 import csv
 import json
 
+# === set variables for uploading files
+UPLOAD_FOLDER = str(os.path.dirname(os.path.realpath(__file__)) + "/data")
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/index')
 @app.route('/')
@@ -48,3 +52,19 @@ def get_exercises(muscle):
         return jsonify([])
     else:
         return jsonify(exercises[muscle])
+
+@app.route('/export_workout')
+def export_workout():
+    """
+    Export ./track_workout/data/workouts.csv file.
+    """
+    return send_file(str(UPLOAD_FOLDER + "/workouts.csv"), as_attachment=True)
+
+@app.route("/import_workout", methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        uploaded_file = request.files['file']
+        if uploaded_file.filename != '':
+            uploaded_file.save(UPLOAD_FOLDER + "/" + uploaded_file.filename)
+        return redirect(url_for('index'))
+    return render_template('upload_csv.html')
