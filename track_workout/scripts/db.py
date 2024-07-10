@@ -32,7 +32,7 @@ def db_connect():
             error_message :str = e.args[1]
             print(">> Retry after 5 sec")
             time.sleep(5)
-            db_connection = pyodbc.connect(connection_string)
+            # db_connection = pyodbc.connect(connection_string)
 
     if error_found == True:
         return f"[SQL Error] Login failed: {error_message}"
@@ -105,5 +105,3 @@ def db_insert(values) -> None:
     cursor.execute(sql_query)
     cursor.commit()
     print(">> Records were added")
-
-print(db_connect())

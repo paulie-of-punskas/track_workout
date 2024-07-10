@@ -13,7 +13,7 @@ class TestTotalWorkout(unittest.TestCase):
         # self.assertTrue(isinstance(db_connection, Cursor))
 
     def test_conn(self):
-        connection_string :str = f'DRIVER={{ODBC Driver 18 for SQL Server}};SERVER="trackworkout.database.windows.net";DATABASE={db_name};UID={db_user};PWD={db_pass};Connection Timeout=60;Encrypt=yes;TrustServerCertificate=no'
+        connection_string :str = f'DRIVER={{ODBC Driver 18 for SQL Server}};SERVER={db_server};DATABASE={db_name};UID={db_user};PWD={db_pass};Connection Timeout=60;Encrypt=yes;TrustServerCertificate=no'
         with connection_string as conn:
             with conn.cursor() as cursor:
                 rows = []
