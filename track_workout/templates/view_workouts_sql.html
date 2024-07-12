@@ -1,0 +1,26 @@
+<html>
+    <title>View workouts</title>
+    
+    <!-- optional boostrap, for showing striped rows
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    -->
+    <h1>Workouts so far:</h1>
+    <table id="data" class="table table-striped">
+        <thead>
+            <tr>
+                {% for column in header %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                {% for column in row %}
+                <td>{{ column }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</html>

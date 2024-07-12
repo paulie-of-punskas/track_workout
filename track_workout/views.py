@@ -1,8 +1,9 @@
 from flask import Flask, render_template, jsonify, request, send_file, redirect, url_for
 from track_workout import app
 from track_workout.static.exercises import exercises
-from track_workout.src.classes import Exercise, TotalWorkout
+from track_workout.src.classes import Exercise
 from track_workout.scripts.save_workout import save_workout
+from track_workout.scripts.db import db_connect, db_get_all_data
 import os
 import csv
 import json
@@ -16,12 +17,19 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def index():
     return render_template("index.html")
 
+
 @app.route('/view_workouts')
 def view_workouts():
     with open("./track_workout/data/workouts.csv", newline="") as csv_file:
         workouts_file = csv.reader(csv_file, delimiter=",", quotechar="|")
         header = next(workouts_file)
         return render_template("view_workouts.html", header=header, rows=workouts_file)
+    
+@app.route('/view_workouts_sql')
+def view_workouts_sql():
+    workouts = db_get_all_data()
+    col_names = ['date', 'muscle', 'exercise', 'kg', 'rep', 'comment']
+    return render_template("view_workouts_sql.html", header=col_names, rows=workouts)
 
 @app.route('/submit_workouts')
 def submit_workouts():
@@ -53,14 +61,14 @@ def get_exercises(muscle):
     else:
         return jsonify(exercises[muscle])
 
-@app.route('/export_workout')
+@app.route('/export_workouts')
 def export_workout():
     """
     Export ./track_workout/data/workouts.csv file.
     """
     return send_file(str(UPLOAD_FOLDER + "/workouts.csv"), as_attachment=True)
 
-@app.route("/import_workout", methods=['GET', 'POST'])
+@app.route("/import_workouts", methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         uploaded_file = request.files['file']

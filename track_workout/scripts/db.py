@@ -17,6 +17,7 @@ def db_connect():
     retry_flag = True
     retry_count :int = 0
 
+    print("[SQL] Connecting to database")
     while retry_flag and retry_count < 5:
         try:
             db_connection = pyodbc.connect(connection_string)
@@ -30,8 +31,8 @@ def db_connect():
             retry_count = retry_count + 1
             retry_flag :bool = True
             error_message :str = e.args[1]
-            print(">> Retry after 10 seconds")
-            time.sleep(10)
+            print(">> Retry after 5 seconds")
+            time.sleep(5)
             # db_connection = pyodbc.connect(connection_string)
 
     if retry_flag == True:
