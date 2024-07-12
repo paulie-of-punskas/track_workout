@@ -21,4 +21,3 @@ class TestTotalWorkout(unittest.TestCase):
                 # row = cursor.fetchall()
                 row = cursor.fetchall()
                 print(row[0])
-                

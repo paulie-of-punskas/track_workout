@@ -2,6 +2,7 @@ import pyodbc
 import os
 import logging
 import time
+from datetime import datetime
 
 db_server :str = os.environ["db_server"]
 db_name :str = os.environ["db_name"]
@@ -13,31 +14,31 @@ def db_connect():
     # db_connection = pyodbc.connect(connection_string) 
     # === investigate timetout
     # cursor = db_connection.cursor()
-    error_found = False
     retry_flag = True
     retry_count :int = 0
 
     while retry_flag and retry_count < 5:
         try:
             db_connection = pyodbc.connect(connection_string)
-            retry_flag = False
+            retry_flag :bool = False
         # except pyodbc.OperationalError as e:
         except pyodbc.InterfaceError as e:
-            error_found :bool = True
+            retry_flag :bool = True
             error_message :str = e.args[1]
             retry_count = retry_count + 1
         except pyodbc.OperationalError as e:
             retry_count = retry_count + 1
-            error_found :bool = True
+            retry_flag :bool = True
             error_message :str = e.args[1]
-            print(">> Retry after 5 sec")
-            time.sleep(5)
+            print(">> Retry after 10 seconds")
+            time.sleep(10)
             # db_connection = pyodbc.connect(connection_string)
 
-    if error_found == True:
-        return f"[SQL Error] Login failed: {error_message}"
+    if retry_flag == True:
+        print(f"[SQL Error] Login failed after 5 tries: {error_message}")
+        return None
     else:
-        print(f"[SQL] Connection successful")
+        print(f"[SQL] Connection successful at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         cursor = db_connection.cursor()
         return cursor
 
@@ -91,11 +92,14 @@ def db_get_all_data():
     # === connect
     # === get data
     # === return data
-    sql_query :str = """ SELECT * FROM track_workout """
+    sql_query :str = " SELECT * FROM track_workout "
     cursor = db_connect()
-    cursor.execute(sql_query)
-    query_result = cursor.fetchall()
-    return query_result
+    if cursor is not None:
+        cursor.execute(sql_query)
+        query_result = cursor.fetchall()
+        return query_result
+    else:
+        return f"[SQL error] Error while obtaining cursor."
 
 def db_insert(values) -> None:
     """ json_values needs following pattern: (2024-01-01, nugara, prisitraukimai, '', 8, '') """
