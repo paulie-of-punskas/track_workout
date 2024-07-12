@@ -14,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/index')
 @app.route('/')
 def index():
-    return 'Labas.'
+    return render_template("index.html")
 
 @app.route('/view_workouts')
 def view_workouts():
