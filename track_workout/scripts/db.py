@@ -27,6 +27,9 @@ def db_connect():
             retry_flag :bool = True
             error_message :str = e.args[1]
             retry_count = retry_count + 1
+        except pyodbc.ProgrammingError as e:
+            error_message :str = e.args[1]
+            retry_count = retry_count + 1
         except pyodbc.OperationalError as e:
             retry_count = retry_count + 1
             retry_flag :bool = True
@@ -103,9 +106,14 @@ def db_get_all_data():
         return f"[SQL error] Error while obtaining cursor."
 
 def db_insert(values) -> None:
-    """ json_values needs following pattern: (2024-01-01, nugara, prisitraukimai, '', 8, '') """
+    """
+    Method is used for adding attribute values of Workout class.
+    "values", needs following pattern: (2024-01-01, nugara, prisitraukimai, 8, 8, '') 
+    """
     # cursor = db_connect()
     sql_query :str = f"INSERT INTO track_workout (date, muscle, exercise, kg, rep, comment) VALUES ({values});"
+    print(">> SQL query: ")
+    print(sql_query)
     cursor = db_connect()
     cursor.execute(sql_query)
     cursor.commit()

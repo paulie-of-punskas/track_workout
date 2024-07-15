@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Submit workouts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<h1>Submit workouts, depending on muscle group</h1>
+<!-- Dropdown, containing values from ./static/exercises.py -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+</script>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <div>
+    <div>
+      <b>Raumenys:&emsp;</b>
+      <select name="raumenys" id="raumenys">
+        <option selected value="0">Pasirink raumenis</option>
+        {% for muscle in muscle_groups %}
+        <option value="{{ muscle }}">{{ muscle }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div>
+      <b>Pratimas:&emsp;</b>
+      <select name="pratimas" id="pratimas">
+        <option selected value="0">Pasirink pratima</option>
+        {% for exercise in exercises %}
+        <option value="{{ exercise }}">{{ exercise }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <label for="svoris"><b>Svoris:</b></label>
+    <input type="text" id="svoris" name="svoris" value=""><br>
+    <br>
+    <label for="pakartojimai"><b>Pakartojimai:</b></label>
+    <input type="text" id="pakartojimai" name="pakartojimai" value=""><br>
+    <br>
+    <label for="komentaras"><b>Komentaras:</b></label>
+    <input type="text" id="komentaras" name="komentaras" value=""><br>
+    <br>
+    <label for="workout_date"><b>Sporto data:</b></label>
+    <input type="text" id="workout_date" name="workout_date" value=""><br>
+    <br>
+    <br>
+    <option></option>
+    <!-- <input id="button" type="submit" onclick="getEnteredData()" value="Send Request" /> -->
+    <input id="guzikas" type="submit" value="Guzikas" />
+  </div>
+</body>
+
+<!-- 
+    script used for populating exercise field, depending on value of muscle_group
+    placed at the bottom, due to TypeError: null is not an object error
+-->
+<script>
+  document.getElementById('raumenys').onchange = function () {
+    var selected_muscle = this.value;
+    console.log(">> " + selected_muscle);
+
+    // Jinja explanation: https://stackoverflow.com/a/36144071
+    // Solution explanation: https://stackoverflow.com/a/75970022
+    var url = "{{ url_for('get_exercises', muscle='') }}" + selected_muscle;
+    console.log(url);
+
+    $.ajax({
+      type: 'GET',
+      url: url,
+      success: function (data) {
+        $("#pratimas").empty();
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+          console.log(">> content of data: " + data[i]);
+          $("#pratimas").append('<option value="' + data[i] + '">' + data[i] + '</option>');
+        }
+      }
+    });
+  }
+
+  // function getEnteredData() {
+  //   var element_raumenys = document.getElementById('raumenys').value;
+  //   var element_pratimas = document.getElementById('pratimas').value;
+  //   var element_svoris = document.getElementById('svoris').value;
+  //   var element_pakartojimai = document.getElementById('pakartojimai').value;
+  //   console.log(">> Entered data: " + element_raumenys + " " + element_pratimas + " " + element_svoris + " " + element_pakartojimai);
+  // };
+
+  document.getElementById('guzikas').onclick = function () {
+    console.log("It's me Kathie, I have come home. So cold.")
+    var element_raumenys = document.getElementById('raumenys').value;
+    var element_pratimas = document.getElementById('pratimas').value;
+    var element_svoris = document.getElementById('svoris').value;
+    var element_pakartojimai = document.getElementById('pakartojimai').value;
+    var element_komentaras = document.getElementById('komentaras').value;
+    var element_workout_date = document.getElementById('workout_date').value;
+
+    /*
+    create json with entered data. Numerical values need to be parsed with `parseInt()`, so tha
+    JSON file is properaly formatted.
+    */
+    var entered_data = [
+      { "muscle": element_raumenys },
+      { "exercise": element_pratimas },
+      { "kg": parseInt(element_svoris) },
+      { "rep": parseInt(element_pakartojimai) },
+      { "comment": element_komentaras },
+      { "workout_date": element_workout_date}
+    ];
+
+    // send json object with API to ingest_js
+    var url = "{{ url_for('ingest_js') }}";
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: JSON.stringify(entered_data),
+      contentType: "application/json",
+      dataType: 'json',
+      success: function(result) {
+        console.log("Result:", result);
+      },
+      error: function(result, status, error) {
+        console.log("Something went wrong", status, error);
+      }
+    });
+
+  };
+
+</script>
+
+</html>
